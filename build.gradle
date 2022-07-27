@@ -1,13 +1,16 @@
 plugins {
   //inlude the nodeJS plugin to execute nodejs and npm tasks
-  id "com.moowork.node" version "1.2.0"
+  //id "com.moowork.node" version "1.2.0"
+  //Mark N. Updating to another support node version for gradle 5.6 above
+  id "com.github.node-gradle.node" version "3.4.0"
 }
 
-node {
-	download = true
-	version = "9.11.1"
-	npmVersion = "5.6.0"
-}
+//node {
+//	download = true
+//	version = "9.11.1"
+//	npmVersion = "5.6.0"
+//}
+
 
 //declare a build task
 task build
@@ -23,13 +26,14 @@ task zip(type: Zip) {
 		include "routes/**"
 		include "views/**"
 	}
-	destinationDir(file("dist"))
-	baseName "trainSchedule"
+	destinationDirectory = file("dist")
+	archiveBaseName = "trainSchedule"
 }
 
 //declare task dependencies
 build.dependsOn zip
-zip.dependsOn npm_build
-npm_build.dependsOn npm_test
+//zip.dependsOn npm_build
+zip.dependsOn npm_test
+//npm_build.dependsOn npm_test
 npm_test.dependsOn npmInstall
-npm_build.dependsOn npmInstall
+//npm_build.dependsOn npmInstall
